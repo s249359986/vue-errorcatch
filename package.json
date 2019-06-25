@@ -1,0 +1,22 @@
+{
+  "name": "vue-errorcatch",
+  "version": "1.0.0",
+  "description": "vue,plugin",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "serve": "webpack-dev-server --open --port 8088",
+    "dist": "webpack --config build/webpack.config.js --env online",
+    "watch": "webpack --watch --config build/webpack.config.js --env test"
+  },  
+  "files": [
+    "dist",
+    "doc"
+  ],
+  "keywords": [
+    "vue",
+    "plugin"
+  ],
+  "author": "7克",
+  "license": "ISC"
+}
