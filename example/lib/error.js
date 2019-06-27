@@ -42,7 +42,7 @@ const registerVue = (instance) => {
     }
 }
 
-let VueError = {
+let GlobalError = {
     install: (Vue, options) => {
         /**
          * 全局异常处理
@@ -50,7 +50,6 @@ let VueError = {
          * } error 
          * @param {*} vm 
          */
-        console.log('VueErrorInstallSuc')
         Vue.config.errorHandler = errorHandler
         Vue.mixin({
             beforeCreate() {
@@ -62,4 +61,4 @@ let VueError = {
     }
 }
 
-export default VueError
+export default GlobalError

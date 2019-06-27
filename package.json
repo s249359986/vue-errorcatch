@@ -2,13 +2,13 @@
   "name": "vue-errorcatch",
   "version": "1.0.0",
   "description": "vue,plugin",
-  "main": "index.js",
+  "main": "dist/vue-errorcatch/errorcatch.min.js",
   "scripts": {
     "test": "mocha",
     "serve": "webpack-dev-server --open --port 8088",
-    "dist": "webpack --config build/webpack.config.js --env online",
-    "watch": "webpack --watch --config build/webpack.config.js --env test"
-  },  
+    "build:test": "rollup --config rollup.config.dev.js",
+    "build:pro": "rollup --config rollup.config.pro.js"    
+  },
   "files": [
     "dist",
     "doc"
@@ -18,5 +18,7 @@
     "plugin"
   ],
   "author": "7克",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {                
+  }
 }

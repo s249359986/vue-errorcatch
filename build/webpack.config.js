@@ -1,77 +1,77 @@
 var pkg = require('../package.json');
 const path = require('path')
 var webpack = require('webpack');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-let HtmlWebpackPlugin = require('html-webpack-plugin')
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const argv = require('yargs').argv
+const APP_NS = process.env.APP_NS
+console.log('APP_NS',APP_NS)
 let options = {evn:argv['env']}
-  let mode = options['evn'] === 'test' ? 'development' : 'production'
-  let config =  {    
+  let mode = 'development'// options['evn'] ==! 'test' ? 'development' : 'production'
+  let config =  {  
     mode: mode,
     devtool: 'source-map',
     entry: {
-      qdebug: path.resolve(__dirname, '../src/vconsole.js')  //'../src/vconsole.js'
+      errorcatch: path.resolve(__dirname, '../src/error.js')
     },    
     output: {
-      path: path.resolve(__dirname, '../dist/qdebug'),  //'../dist/qdebug',
-      filename: '[name].min.js',
-      library: 'QDebug',
+      path: path.resolve(__dirname, '../dist/vue-errorcatch'),
+      filename: '[name].js',
+      library: 'VueError',
       libraryTarget: 'umd',
-      libraryExport: 'default',
+      // libraryExport: 'default', 
       publicPath: '/'
       
     },
     module: {      
       rules:[
-        {
-          test: /\.json$/,
-          exclude: /node_modules/,
-          type: 'javascript/auto',  // 加上type
-          loader: 'json-loader'        
-      },
-        {
-        test: /\.(html)$/,
-        use: {
-          loader: 'html-loader',
-          options: {
-            attrs: [':data-src']
-          }
-        }
-      },{
+      //   {
+      //     test: /\.json$/,
+      //     exclude: /node_modules/,
+      //     type: 'javascript/auto',  // 加上type
+      //     loader: 'json-loader'        
+      // },
+      //   {
+      //   test: /\.(html)$/,
+      //   use: {
+      //     loader: 'html-loader',
+      //     options: {
+      //       attrs: [':data-src']
+      //     }
+      //   }
+      // },
+      {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
         use: {
           loader: 'babel-loader'          
         }
-      },{
-        test: /\.less$/,
-        use: [{
-            loader: "style-loader" // creates style nodes from JS strings
-        }, {
-            loader: "css-loader" // translates CSS into CommonJS
-        }, {
-            loader: "less-loader" // compiles Less to CSS
-        }]
-    }
+      },
+    //   {
+    //     test: /\.less$/,
+    //     use: [{
+    //         loader: "style-loader" // creates style nodes from JS strings
+    //     }, {
+    //         loader: "css-loader" // translates CSS into CommonJS
+    //     }, {
+    //         loader: "less-loader" // compiles Less to CSS
+    //     }]
+    // },
+  //   {
+  //     test:/\.vue$/,
+  //     loader:'vue-loader'
+  // }
 ]      
     },
     plugins: [
-      new CleanWebpackPlugin('dist',{root:path.resolve(__dirname, '..')})
-      // new webpack.BannerPlugin([
-      //   'vConsole v' + pkg.version + ' (' + pkg.homepage + ')',
-      //   '',
-      //   'Tencent is pleased to support the open source community by making vConsole available.',
-      //   'Copyright (C) 2017 THL A29 Limited, a Tencent company. All rights reserved.',
-      //   'Licensed under the MIT License (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at',
-      //   'http://opensource.org/licenses/MIT',
-      //   'Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.'
-      // ].join('\n')),
-      // new webpack.optimize.UglifyJsPlugin({
-      //   compress: {
-      //     warnings: false
-      //   }
-      // })
+      new webpack.DefinePlugin({
+        'process.env.APP_NS': JSON.stringify(process.env.APP_NS)
+      }),
+      new CleanWebpackPlugin(),
+      new webpack.BannerPlugin([
+        'vue-errorcatch v' + pkg.version + ' (' + pkg.homepage + ')',
+        '',
+        '这是一个vue插件可以捕获全局异常包括同步异常和异步异常，同样可以捕获vuex异常',             
+      ].join('\n'))     
       // ,new ExtractTextPlugin('[name].min.css') // 将css独立打包
     ]
   }

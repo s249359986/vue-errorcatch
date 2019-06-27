@@ -5,7 +5,7 @@ const chalk = require('chalk')
 const argv = require('yargs').argv
 let options = {evn:argv['env']}
 let compiler = null
-compiler = webpack(webpackConfig(options))
+compiler = webpack(webpackConfig)
 console.log('argv',argv)
 console.log('\nbuilding...')
 compiler.run((err, stats) => {
